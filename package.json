@@ -11,5 +11,8 @@
   "devDependencies": {
     "browserify": "~11.2.0",
     "babelify": "~6.4.0"
+  },
+  "dependencies": {
+    "node-static": "~0.7.7"
   }
 }
