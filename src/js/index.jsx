@@ -1,3 +1,2 @@
-const Casilla = require("./Casilla.jsx");
-ReactDOM.render(<Casilla />,
-  document.getElementById('contenedor'));
+const Tablero = require("./Tablero.jsx");
+ReactDOM.render(<Tablero />, document.getElementById('contenedor'));
