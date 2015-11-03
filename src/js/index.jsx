@@ -1,2 +1,2 @@
-const Tablero = require("./Tablero.jsx");
-ReactDOM.render(<Tablero />, document.getElementById('contenedor'));
+const App = require("./App.jsx");
+ReactDOM.render(<App />, document.getElementById('contenedor'));
