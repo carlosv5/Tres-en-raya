@@ -4,3 +4,10 @@
 .no_clickable {
   cursor: not-allowed;
 }
+.black {
+  background-color: black;
+  color: white;
+}
+.white {
+  background-color: white;
+}
