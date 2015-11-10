@@ -3,7 +3,7 @@
 
 var Tablero = require('./Tablero.jsx');
 var Cabecera = require('./Cabecera.jsx');
-var Resultado = require('./Resultado.jsx');
+var Reinicio = require('./Reinicio.jsx');
 var JUGADORX = "jugador 1 - las X";
 var JUGADOR0 = "jugador 2 - los 0";
 
@@ -13,14 +13,30 @@ var App = React.createClass({
   getInitialState: function getInitialState() {
     return {
       turno: JUGADORX,
-      ganador: "",
-      dataJugadorX: [],
-      dataJugadorY: [],
+      rellenas: 0,
       valores: [['-', '-', '-'], ['-', '-', '-'], ['-', '-', '-']]
     };
   },
 
+  setInitialState: function setInitialState() {
+    var nuevoValor = '-';
+    var valores = this.state.valores;
+    var turno = JUGADORX;
+    for (var i = 0; i < 3; i++) {
+      for (var j = 0; j < 3; j++) {
+        valores[i][j] = nuevoValor;
+      }
+    }
+    var rellenas = 0;
+    this.setState({
+      turno: this.state.turno === JUGADORX ? JUGADOR0 : JUGADORX,
+      valores: this.state.valores,
+      rellenas: this.state.rellenas
+    });
+  },
+
   appClick: function appClick(numeroFila, numeroColumna) {
+    var rellenas = this.state.rellenas++;
     var valores = this.state.valores;
     var nuevoValor = this.state.turno === JUGADORX ? 'X' : '0';
     valores[numeroFila][numeroColumna] = nuevoValor;
@@ -75,33 +91,31 @@ var App = React.createClass({
     if (cuenta == 2) {
       alert("Tres en raya diagonal 2!!!");
     }
-    console.log(cuenta);
+    if (rellenas === 9) {
+      alert("Empate!!!");
+    }
     this.setState({
       turno: this.state.turno === JUGADORX ? JUGADOR0 : JUGADORX,
-      valores: this.state.valores,
-      dataJugadorX: this.state.dataJugadorX,
-      dataJugadorY: this.state.dataJugadorY,
-      ganador: this.state.ganador
+      valores: this.state.valores
     });
   },
 
   render: function render() {
     var texto;
     texto = "Turno del " + this.state.turno;
-    var resultado = "El ganador es " + this.state.ganador;
     return React.createElement(
       'div',
       null,
       React.createElement(Cabecera, { texto: texto }),
       React.createElement(Tablero, { valores: this.state.valores,
         manejadorTableroClick: this.appClick }),
-      React.createElement(Resultado, { texto: resultado })
+      React.createElement(Reinicio, { texto: 'Reinicio', manejadorReinicioClick: this.setInitialState })
     );
   }
 });
 module.exports = App;
 
-},{"./Cabecera.jsx":2,"./Resultado.jsx":4,"./Tablero.jsx":5}],2:[function(require,module,exports){
+},{"./Cabecera.jsx":2,"./Reinicio.jsx":4,"./Tablero.jsx":5}],2:[function(require,module,exports){
 "use strict";
 
 var Cabecera = React.createClass({
@@ -145,18 +159,21 @@ module.exports = Casilla;
 },{}],4:[function(require,module,exports){
 "use strict";
 
-var Resultado = React.createClass({
-  displayName: "Resultado",
+var Reinicio = React.createClass({
+  displayName: "Reinicio",
 
+  reinicioClick: function reinicioClick() {
+    this.props.manejadorReinicioClick();
+  },
   render: function render() {
     return React.createElement(
-      "header",
-      { className: "resultado" },
+      "button",
+      { className: "btnReinicio", onClick: this.reinicioClick },
       this.props.texto
     );
   }
 });
-module.exports = Resultado;
+module.exports = Reinicio;
 
 },{}],5:[function(require,module,exports){
 "use strict";

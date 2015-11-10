@@ -4,10 +4,10 @@ var Reinicio = React.createClass({
   },
   render: function(){
     return (
-      <button className="btnReinicio">
+      <button className="btnReinicio" onClick={this.reinicioClick}>
       {this.props.texto}
       </button>
     )
   }
 });
-module.exports = Resultado;
+module.exports = Reinicio;
