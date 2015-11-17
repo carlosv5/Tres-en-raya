@@ -11,6 +11,7 @@ var App = React.createClass({
     return {
       turno: JUGADORX,
       ganador: "",
+      empate: 0,
       valores: [
         ['-', '-', '-'],
         ['-', '-', '-'],
@@ -21,19 +22,21 @@ var App = React.createClass({
 
   setInitialState: function(){
       let nuevoValor = '-';
-      let valores= this.state.valores;
-      let turno = JUGADORX;
+      this.state.valores= this.state.valores;
+      this.state.turno = JUGADORX;
       this.state.ganador = "";
+      this.state.empate = 0;
 
       for( var i = 0; i < 3 ; i++){
         for(var j = 0; j < 3 ; j++){
-          valores[i][j] = nuevoValor;
+          this.state.valores[i][j] = nuevoValor;
         }
       }
       this.setState({
         ganador: this.state.ganador,
         turno: this.state.turno === JUGADORX ? JUGADOR0:JUGADORX,
         valores: this.state.valores,
+        empate: this.state.empate,
       });
   },
 
@@ -41,6 +44,7 @@ var App = React.createClass({
     let valores = this.state.valores;
     let nuevoValor = this.state.turno === JUGADORX ? 'X':'0';
     valores[numeroFila][numeroColumna] = nuevoValor;
+    this.state.empate++;
 
     //Misma columna
     var cuenta = 0;
@@ -51,7 +55,7 @@ var App = React.createClass({
         }
       }
     }
-    if(cuenta ==2){
+    if((cuenta ==2)&&(this.state.ganador === "")){
         this.state.ganador = this.state.turno;
     }
 
@@ -64,7 +68,7 @@ var App = React.createClass({
         }
       }
     }
-        if(cuenta ==2){
+    if((cuenta ==2)&&(this.state.ganador === "")){
           this.state.ganador = this.state.turno;
         }
     //Misma diagonal descendente
@@ -76,7 +80,7 @@ var App = React.createClass({
         }
       }
     }
-        if(cuenta ==2){
+    if((cuenta ==2)&&(this.state.ganador === "")){
           this.state.ganador = this.state.turno;
 
         }
@@ -91,8 +95,11 @@ var App = React.createClass({
       }
     }
   }
-  if(cuenta ==2){
+  if((cuenta ==2)&&(this.state.ganador === "")){
     this.state.ganador = this.state.turno;
+  }
+  if((this.state.empate === 9)&&(this.state.ganador === "")){
+    this.state.ganador = "Empate";
   }
 
     this.setState({

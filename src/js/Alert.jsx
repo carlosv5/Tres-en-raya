@@ -1,6 +1,9 @@
 var Alert = React.createClass({
   render: function(){
-    if(this.props.ganador != ""){
+    if(this.props.ganador === "Empate"){
+      alert(this.props.ganador + ", ¿Queréis jugar otra partida?");
+    }
+    else if(this.props.ganador != ""){
       alert(this.props.ganador + " ha ganado");
     }
     return (
