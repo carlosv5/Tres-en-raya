@@ -1,6 +1,8 @@
 const Tablero = require('./Tablero.jsx');
 const Cabecera = require('./Cabecera.jsx');
 const Reinicio = require('./Reinicio.jsx');
+const Alert = require('./Alert.jsx');
+
 const JUGADORX = "jugador 1 - las X";
 const JUGADOR0 = "jugador 2 - los 0";
 
@@ -8,7 +10,7 @@ var App = React.createClass({
   getInitialState: function(){
     return {
       turno: JUGADORX,
-      rellenas : 0,
+      ganador: "",
       valores: [
         ['-', '-', '-'],
         ['-', '-', '-'],
@@ -21,21 +23,21 @@ var App = React.createClass({
       let nuevoValor = '-';
       let valores= this.state.valores;
       let turno = JUGADORX;
+      this.state.ganador = "";
+
       for( var i = 0; i < 3 ; i++){
         for(var j = 0; j < 3 ; j++){
           valores[i][j] = nuevoValor;
         }
       }
-      let rellenas = 0;
       this.setState({
+        ganador: this.state.ganador,
         turno: this.state.turno === JUGADORX ? JUGADOR0:JUGADORX,
         valores: this.state.valores,
-        rellenas: this.state.rellenas,
       });
   },
 
   appClick: function(numeroFila, numeroColumna){
-    var rellenas = this.state.rellenas++;
     let valores = this.state.valores;
     let nuevoValor = this.state.turno === JUGADORX ? 'X':'0';
     valores[numeroFila][numeroColumna] = nuevoValor;
@@ -49,9 +51,10 @@ var App = React.createClass({
         }
       }
     }
-        if(cuenta ==2){
-          alert("Tres en raya vertical!!!");
-        }
+    if(cuenta ==2){
+        this.state.ganador = this.state.turno;
+    }
+
     //Misma fila
     cuenta = 0;
     for( var i = 0; i < 3 ; i++){
@@ -62,7 +65,7 @@ var App = React.createClass({
       }
     }
         if(cuenta ==2){
-          alert("Tres en raya horizontal!!!");
+          this.state.ganador = this.state.turno;
         }
     //Misma diagonal descendente
     var cuenta = 0;
@@ -74,7 +77,8 @@ var App = React.createClass({
       }
     }
         if(cuenta ==2){
-          alert("Tres en raya diagonal 1!!!");
+          this.state.ganador = this.state.turno;
+
         }
   //Misma diagonal descendente
   var cuenta = 0;
@@ -88,26 +92,28 @@ var App = React.createClass({
     }
   }
   if(cuenta ==2){
-    alert("Tres en raya diagonal 2!!!");
+    this.state.ganador = this.state.turno;
   }
-  if(rellenas === 9){
-    alert("Empate!!!");
-  }
+
     this.setState({
       turno: this.state.turno === JUGADORX ? JUGADOR0:JUGADORX,
       valores: this.state.valores,
+      ganador: this.state.ganador,
     });
   },
 
   render: function(){
     var texto;
     texto = "Turno del " + this.state.turno;
+    var victoria = this.state.ganador;
+
     return (
       <div>
       <Cabecera texto={texto}/>
       <Tablero valores={this.state.valores}
       manejadorTableroClick={this.appClick}/>
-      <Reinicio texto = "Reinicio" manejadorReinicioClick={this.setInitialState}/>
+      <Reinicio texto = {"Reinicio"} manejadorReinicioClick={this.setInitialState} />
+      <Alert ganador = {victoria}/>
       </div>
     )
   }

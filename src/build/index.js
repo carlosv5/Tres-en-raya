@@ -1,9 +1,26 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+"use strict";
+
+var Alert = React.createClass({
+  displayName: "Alert",
+
+  render: function render() {
+    if (this.props.ganador != "") {
+      alert(this.props.ganador + " ha ganado");
+    }
+    return React.createElement("div", null);
+  }
+});
+module.exports = Alert;
+
+},{}],2:[function(require,module,exports){
 'use strict';
 
 var Tablero = require('./Tablero.jsx');
 var Cabecera = require('./Cabecera.jsx');
 var Reinicio = require('./Reinicio.jsx');
+var Alert = require('./Alert.jsx');
+
 var JUGADORX = "jugador 1 - las X";
 var JUGADOR0 = "jugador 2 - los 0";
 
@@ -13,7 +30,7 @@ var App = React.createClass({
   getInitialState: function getInitialState() {
     return {
       turno: JUGADORX,
-      rellenas: 0,
+      ganador: "",
       valores: [['-', '-', '-'], ['-', '-', '-'], ['-', '-', '-']]
     };
   },
@@ -22,21 +39,21 @@ var App = React.createClass({
     var nuevoValor = '-';
     var valores = this.state.valores;
     var turno = JUGADORX;
+    this.state.ganador = "";
+
     for (var i = 0; i < 3; i++) {
       for (var j = 0; j < 3; j++) {
         valores[i][j] = nuevoValor;
       }
     }
-    var rellenas = 0;
     this.setState({
+      ganador: this.state.ganador,
       turno: this.state.turno === JUGADORX ? JUGADOR0 : JUGADORX,
-      valores: this.state.valores,
-      rellenas: this.state.rellenas
+      valores: this.state.valores
     });
   },
 
   appClick: function appClick(numeroFila, numeroColumna) {
-    var rellenas = this.state.rellenas++;
     var valores = this.state.valores;
     var nuevoValor = this.state.turno === JUGADORX ? 'X' : '0';
     valores[numeroFila][numeroColumna] = nuevoValor;
@@ -51,8 +68,9 @@ var App = React.createClass({
       }
     }
     if (cuenta == 2) {
-      alert("Tres en raya vertical!!!");
+      this.state.ganador = this.state.turno;
     }
+
     //Misma fila
     cuenta = 0;
     for (var i = 0; i < 3; i++) {
@@ -63,7 +81,7 @@ var App = React.createClass({
       }
     }
     if (cuenta == 2) {
-      alert("Tres en raya horizontal!!!");
+      this.state.ganador = this.state.turno;
     }
     //Misma diagonal descendente
     var cuenta = 0;
@@ -75,7 +93,7 @@ var App = React.createClass({
       }
     }
     if (cuenta == 2) {
-      alert("Tres en raya diagonal 1!!!");
+      this.state.ganador = this.state.turno;
     }
     //Misma diagonal descendente
     var cuenta = 0;
@@ -89,33 +107,35 @@ var App = React.createClass({
       }
     }
     if (cuenta == 2) {
-      alert("Tres en raya diagonal 2!!!");
+      this.state.ganador = this.state.turno;
     }
-    if (rellenas === 9) {
-      alert("Empate!!!");
-    }
+
     this.setState({
       turno: this.state.turno === JUGADORX ? JUGADOR0 : JUGADORX,
-      valores: this.state.valores
+      valores: this.state.valores,
+      ganador: this.state.ganador
     });
   },
 
   render: function render() {
     var texto;
     texto = "Turno del " + this.state.turno;
+    var victoria = this.state.ganador;
+
     return React.createElement(
       'div',
       null,
       React.createElement(Cabecera, { texto: texto }),
       React.createElement(Tablero, { valores: this.state.valores,
         manejadorTableroClick: this.appClick }),
-      React.createElement(Reinicio, { texto: 'Reinicio', manejadorReinicioClick: this.setInitialState })
+      React.createElement(Reinicio, { texto: "Reinicio", manejadorReinicioClick: this.setInitialState }),
+      React.createElement(Alert, { ganador: victoria })
     );
   }
 });
 module.exports = App;
 
-},{"./Cabecera.jsx":2,"./Reinicio.jsx":4,"./Tablero.jsx":5}],2:[function(require,module,exports){
+},{"./Alert.jsx":1,"./Cabecera.jsx":3,"./Reinicio.jsx":5,"./Tablero.jsx":6}],3:[function(require,module,exports){
 "use strict";
 
 var Cabecera = React.createClass({
@@ -131,7 +151,7 @@ var Cabecera = React.createClass({
 });
 module.exports = Cabecera;
 
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 'use strict';
 
 var casillaStyle = {
@@ -149,14 +169,14 @@ var Casilla = React.createClass({
   render: function render() {
     return React.createElement(
       'button',
-      { style: casillaStyle, className: this.props.valor === "-" ? "clickable" : "no_clickable", className: this.props.valor === "X" ? "black" : "white", onClick: this.casillaClick },
+      { style: casillaStyle, className: this.props.valor === '-' ? "clickable" : "no_clickable", onClick: this.casillaClick },
       this.props.valor
     );
   }
 });
 module.exports = Casilla;
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 "use strict";
 
 var Reinicio = React.createClass({
@@ -175,7 +195,7 @@ var Reinicio = React.createClass({
 });
 module.exports = Reinicio;
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 "use strict";
 
 var Casilla = require("./Casilla.jsx");
@@ -207,10 +227,10 @@ var Tablero = React.createClass({
 });
 module.exports = Tablero;
 
-},{"./Casilla.jsx":3}],6:[function(require,module,exports){
+},{"./Casilla.jsx":4}],7:[function(require,module,exports){
 "use strict";
 
 var App = require("./App.jsx");
 ReactDOM.render(React.createElement(App, null), document.getElementById('contenedor'));
 
-},{"./App.jsx":1}]},{},[6]);
+},{"./App.jsx":2}]},{},[7]);
