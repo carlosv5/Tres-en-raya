@@ -11,3 +11,13 @@
 .white {
   background-color: white;
 }
+.centrado{
+  text-align: center;
+}
+.btnReinicio{
+  margin-top: 20px;
+}
+.letras{
+  font-size:50px;
+  font-weight: bold;
+}

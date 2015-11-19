@@ -7,7 +7,7 @@ const Reinicio = require('./Reinicio.jsx');
 const Alert = require('./Alert.jsx');
 
 const JUGADORX = "jugador 1 - las X";
-const JUGADOR0 = "jugador 2 - los 0";
+const JUGADOR0 = "jugador 2 - los O";
 
 var App = React.createClass({
   getInitialState: function(){
@@ -45,7 +45,7 @@ var App = React.createClass({
 
   appClick: function(numeroFila, numeroColumna){
     let valores = this.state.valores;
-    let nuevoValor = this.state.turno === JUGADORX ? 'X':'0';
+    let nuevoValor = this.state.turno === JUGADORX ? 'X':'O';
     valores[numeroFila][numeroColumna] = nuevoValor;
     this.state.empate++;
 
@@ -118,7 +118,7 @@ var App = React.createClass({
     var ganador = this.state.ganador;
 
     return (
-      <div>
+      <div className="centrado">
       <Cabecera texto={texto}/>
       <Tablero valores={this.state.valores} ganador={ganador}
       manejadorTableroClick={this.appClick}/>

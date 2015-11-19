@@ -4,7 +4,7 @@ var ReactDOM = require('react-dom');
 var Cabecera = React.createClass({
   render: function(){
     return (
-      <header className="cabecera">
+      <header>
       {this.props.texto}
       </header>
     )

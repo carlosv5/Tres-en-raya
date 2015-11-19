@@ -9,7 +9,7 @@ var Reinicio = React.createClass({
   },
   render: function(){
     return (
-      <Button bsStyle="info" className="btnReinicio" onClick={this.reinicioClick}>
+      <Button bsStyle="info" bsSize="large" className="btnReinicio" onClick={this.reinicioClick}>
       {this.props.texto}
       </Button>
     )

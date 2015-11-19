@@ -5,7 +5,7 @@ var ReactDOM = require('react-dom');
 
 const casillaStyle = {
   height: '100px',
-  width: '100px'
+  width: '100px',
 };
 let Casilla = React.createClass({
   casillaClick: function(){
@@ -17,7 +17,7 @@ let Casilla = React.createClass({
     return (
       <Button bsStyle="primary" style={casillaStyle} className={((this.props.valor ==='-') && (this.props.ganador === "")) ? "clickable":"no_clickable"}
        onClick={this.casillaClick}>
-      {this.props.valor}
+      <span className="letras">{this.props.valor}</span>
       </Button>
     )
   }

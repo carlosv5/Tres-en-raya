@@ -34851,7 +34851,7 @@ var Reinicio = require('./Reinicio.jsx');
 var Alert = require('./Alert.jsx');
 
 var JUGADORX = "jugador 1 - las X";
-var JUGADOR0 = "jugador 2 - los 0";
+var JUGADOR0 = "jugador 2 - los O";
 
 var App = React.createClass({
   displayName: 'App',
@@ -34887,7 +34887,7 @@ var App = React.createClass({
 
   appClick: function appClick(numeroFila, numeroColumna) {
     var valores = this.state.valores;
-    var nuevoValor = this.state.turno === JUGADORX ? 'X' : '0';
+    var nuevoValor = this.state.turno === JUGADORX ? 'X' : 'O';
     valores[numeroFila][numeroColumna] = nuevoValor;
     this.state.empate++;
 
@@ -34961,7 +34961,7 @@ var App = React.createClass({
 
     return React.createElement(
       'div',
-      null,
+      { className: 'centrado' },
       React.createElement(Cabecera, { texto: texto }),
       React.createElement(Tablero, { valores: this.state.valores, ganador: ganador,
         manejadorTableroClick: this.appClick }),
@@ -34984,7 +34984,7 @@ var Cabecera = React.createClass({
   render: function render() {
     return React.createElement(
       'header',
-      { className: 'cabecera' },
+      null,
       this.props.texto
     );
   }
@@ -35016,7 +35016,11 @@ var Casilla = React.createClass({
       _reactBootstrap.Button,
       { bsStyle: 'primary', style: casillaStyle, className: this.props.valor === '-' && this.props.ganador === "" ? "clickable" : "no_clickable",
         onClick: this.casillaClick },
-      this.props.valor
+      React.createElement(
+        'span',
+        { className: 'letras' },
+        this.props.valor
+      )
     );
   }
 });
@@ -35039,7 +35043,7 @@ var Reinicio = React.createClass({
   render: function render() {
     return React.createElement(
       _reactBootstrap.Button,
-      { bsStyle: 'info', className: 'btnReinicio', onClick: this.reinicioClick },
+      { bsStyle: 'info', bsSize: 'large', className: 'btnReinicio', onClick: this.reinicioClick },
       this.props.texto
     );
   }

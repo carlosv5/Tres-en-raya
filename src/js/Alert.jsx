@@ -11,6 +11,7 @@ var Alert = React.createClass({
     }
     return (
       <div >
+
       </div>
     )
   }
