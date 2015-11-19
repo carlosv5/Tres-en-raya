@@ -4,13 +4,14 @@ const casillaStyle = {
 };
 let Casilla = React.createClass({
   casillaClick: function(){
-    if(this.props.valor==="-"){
+    if((this.props.valor==="-") && (this.props.ganador === "")){
       this.props.manejadorCasillaClick(this.props.indiceFila, this.props.indiceColumna);
     }
   },
   render: function(){
     return (
-      <button style={casillaStyle} className={this.props.valor ==='-' ? "clickable":"no_clickable"} onClick={this.casillaClick}>
+      <button style={casillaStyle} className={((this.props.valor ==='-') && (this.props.ganador === "")) ? "clickable":"no_clickable"}
+       onClick={this.casillaClick}>
       {this.props.valor}
       </button>
     )
