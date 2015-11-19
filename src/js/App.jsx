@@ -37,7 +37,7 @@ var App = React.createClass({
     }
     this.setState({
       ganador: this.state.ganador,
-      turno: this.state.turno === JUGADORX ? JUGADOR0:JUGADORX,
+      turno: this.state.turno,
       valores: this.state.valores,
       empate: this.state.empate,
     });
