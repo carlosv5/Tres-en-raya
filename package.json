@@ -13,6 +13,9 @@
     "babelify": "~6.4.0"
   },
   "dependencies": {
-    "node-static": "~0.7.7"
+    "node-static": "~0.7.7",
+    "react": "^0.14.3",
+    "react-bootstrap": "^0.28.1",
+    "react-dom": "^0.14.3"
   }
 }

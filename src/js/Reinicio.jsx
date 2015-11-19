@@ -1,12 +1,17 @@
+import { Button } from 'react-bootstrap';
+
+var React = require('react');
+var ReactDOM = require('react-dom');
+
 var Reinicio = React.createClass({
   reinicioClick: function(){
       this.props.manejadorReinicioClick();
   },
   render: function(){
     return (
-      <button className="btnReinicio" onClick={this.reinicioClick}>
+      <Button bsStyle="info" className="btnReinicio" onClick={this.reinicioClick}>
       {this.props.texto}
-      </button>
+      </Button>
     )
   }
 });

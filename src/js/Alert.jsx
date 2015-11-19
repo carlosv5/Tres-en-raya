@@ -1,3 +1,6 @@
+var React = require('react');
+var ReactDOM = require('react-dom');
+
 var Alert = React.createClass({
   render: function(){
     if(this.props.ganador === "Empate"){
