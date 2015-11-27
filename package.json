@@ -13,6 +13,7 @@
     "babelify": "~6.4.0"
   },
   "dependencies": {
+    "flux": "^2.1.1",
     "node-static": "~0.7.7",
     "react": "^0.14.3",
     "react-bootstrap": "^0.28.1",
