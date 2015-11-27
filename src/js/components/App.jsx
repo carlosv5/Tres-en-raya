@@ -32,9 +32,10 @@ var App = React.createClass({
   render: function(){
     var texto = "Turno del " + this.state.turno;
     return (
-      <div>
+      <div className="centrado">
       <Cabecera texto={texto}/>
       <Tablero valores={this.state.valores} ganador ={this.state.ganador}/>
+      <Reinicio texto = {"Reinicio"} />
       <Alert ganador = {this.state.ganador}/>
       </div>
     )

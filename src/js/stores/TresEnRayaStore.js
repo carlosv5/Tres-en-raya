@@ -47,7 +47,7 @@ TresEnRayaDispatcher.register(function (payload) {
       }
     }
     if(cuenta ==2){
-      ganador = turno;
+      ganador = turno === Constants.JUGADORX ? Constants.JUGADOR0 : Constants.JUGADORX;
     }
 
     //Misma fila
@@ -60,7 +60,7 @@ TresEnRayaDispatcher.register(function (payload) {
       }
     }
     if(cuenta ==2){
-      ganador = turno;
+      ganador = turno === Constants.JUGADORX ? Constants.JUGADOR0 : Constants.JUGADORX;
     }
 
     //Misma diagonal descendente
@@ -73,7 +73,7 @@ TresEnRayaDispatcher.register(function (payload) {
       }
     }
     if(cuenta ==2){
-      ganador = turno;
+      ganador = turno === Constants.JUGADORX ? Constants.JUGADOR0 : Constants.JUGADORX;
     }
     //Misma diagonal descendente
     var cuenta = 0;
@@ -87,13 +87,28 @@ TresEnRayaDispatcher.register(function (payload) {
       }
     }
     if(cuenta ==2){
-      ganador = turno;
+      ganador = turno === Constants.JUGADORX ? Constants.JUGADOR0 : Constants.JUGADORX;
     }
     if((empate === 9)&&(ganador === "")){
       ganador = "Empate";
     }
     TresEnRayaStore.emitChange();
     break;
+    case Constants.ActionTypes.REINICIAR:
+      nuevoValor = '-';
+      var valores= valoresTablero;
+      turno = Constants.JUGADORX;
+      ganador = "";
+      empate = 0;
+
+      for( var i = 0; i < 3 ; i++){
+        for(var j = 0; j < 3 ; j++){
+          valoresTablero[i][j] = nuevoValor;
+        }
+      }
+      TresEnRayaStore.emitChange();
+      break;
+
   }
 });
 module.exports = TresEnRayaStore;

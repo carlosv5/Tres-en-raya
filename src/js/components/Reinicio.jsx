@@ -3,9 +3,11 @@ import { Button } from 'react-bootstrap';
 var React = require('react');
 var ReactDOM = require('react-dom');
 
+var TresEnRayaActions = require('../actions/TresEnRayaActions.js');
+
 var Reinicio = React.createClass({
   reinicioClick: function(){
-      this.props.manejadorReinicioClick();
+      TresEnRayaActions.reiniciar();
   },
   render: function(){
     return (

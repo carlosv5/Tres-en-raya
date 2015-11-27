@@ -10,7 +10,6 @@ const casillaStyle = {
 };
 let Casilla = React.createClass({
   casillaClick: function(){
-    console.log(this.props.ganador)
     if((this.props.valor==="-") && (this.props.ganador === "")){
           TresEnRayaActions.jugarPosicion(this.props.indiceFila, this.props.indiceColumna);
     }

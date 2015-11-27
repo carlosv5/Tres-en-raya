@@ -7,5 +7,10 @@ module.exports = {
       x : x,
       y : y
     });
+  },
+  reiniciar: function(x,y) {
+    TresEnRayaDispatcher.dispatch({
+        type : Constants.ActionTypes.REINICIAR
+    });
   }
 };

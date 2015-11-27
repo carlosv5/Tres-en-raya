@@ -35129,6 +35129,11 @@ module.exports = {
       x: x,
       y: y
     });
+  },
+  reiniciar: function reiniciar(x, y) {
+    TresEnRayaDispatcher.dispatch({
+      type: Constants.ActionTypes.REINICIAR
+    });
   }
 };
 
@@ -35192,9 +35197,10 @@ var App = React.createClass({
     var texto = "Turno del " + this.state.turno;
     return React.createElement(
       'div',
-      null,
+      { className: 'centrado' },
       React.createElement(Cabecera, { texto: texto }),
       React.createElement(Tablero, { valores: this.state.valores, ganador: this.state.ganador }),
+      React.createElement(Reinicio, { texto: "Reinicio" }),
       React.createElement(Alert, { ganador: this.state.ganador })
     );
   }
@@ -35237,7 +35243,6 @@ var Casilla = React.createClass({
   displayName: 'Casilla',
 
   casillaClick: function casillaClick() {
-    console.log(this.props.ganador);
     if (this.props.valor === "-" && this.props.ganador === "") {
       TresEnRayaActions.jugarPosicion(this.props.indiceFila, this.props.indiceColumna);
     }
@@ -35265,11 +35270,13 @@ var _reactBootstrap = require('react-bootstrap');
 var React = require('react');
 var ReactDOM = require('react-dom');
 
+var TresEnRayaActions = require('../actions/TresEnRayaActions.js');
+
 var Reinicio = React.createClass({
   displayName: 'Reinicio',
 
   reinicioClick: function reinicioClick() {
-    this.props.manejadorReinicioClick();
+    TresEnRayaActions.reiniciar();
   },
   render: function render() {
     return React.createElement(
@@ -35281,7 +35288,7 @@ var Reinicio = React.createClass({
 });
 module.exports = Reinicio;
 
-},{"react":404,"react-bootstrap":75,"react-dom":248}],411:[function(require,module,exports){
+},{"../actions/TresEnRayaActions.js":405,"react":404,"react-bootstrap":75,"react-dom":248}],411:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -35316,7 +35323,8 @@ module.exports = Tablero;
 
 module.exports = {
   ActionTypes: {
-    JUGAR_POSICION: "JUGAR_POSICION"
+    JUGAR_POSICION: "JUGAR_POSICION",
+    REINICIAR: "REINICIAR"
   },
   CHANGE_EVENT: 'change',
   JUGADORX: "jugador 1 - las X",
@@ -35389,7 +35397,7 @@ TresEnRayaDispatcher.register(function (payload) {
         }
       }
       if (cuenta == 2) {
-        ganador = turno;
+        ganador = turno === Constants.JUGADORX ? Constants.JUGADOR0 : Constants.JUGADORX;
       }
 
       //Misma fila
@@ -35402,7 +35410,7 @@ TresEnRayaDispatcher.register(function (payload) {
         }
       }
       if (cuenta == 2) {
-        ganador = turno;
+        ganador = turno === Constants.JUGADORX ? Constants.JUGADOR0 : Constants.JUGADORX;
       }
 
       //Misma diagonal descendente
@@ -35415,7 +35423,7 @@ TresEnRayaDispatcher.register(function (payload) {
         }
       }
       if (cuenta == 2) {
-        ganador = turno;
+        ganador = turno === Constants.JUGADORX ? Constants.JUGADOR0 : Constants.JUGADORX;
       }
       //Misma diagonal descendente
       var cuenta = 0;
@@ -35429,13 +35437,28 @@ TresEnRayaDispatcher.register(function (payload) {
         }
       }
       if (cuenta == 2) {
-        ganador = turno;
+        ganador = turno === Constants.JUGADORX ? Constants.JUGADOR0 : Constants.JUGADORX;
       }
       if (empate === 9 && ganador === "") {
         ganador = "Empate";
       }
       TresEnRayaStore.emitChange();
       break;
+    case Constants.ActionTypes.REINICIAR:
+      nuevoValor = '-';
+      var valores = valoresTablero;
+      turno = Constants.JUGADORX;
+      ganador = "";
+      empate = 0;
+
+      for (var i = 0; i < 3; i++) {
+        for (var j = 0; j < 3; j++) {
+          valoresTablero[i][j] = nuevoValor;
+        }
+      }
+      TresEnRayaStore.emitChange();
+      break;
+
   }
 });
 module.exports = TresEnRayaStore;
